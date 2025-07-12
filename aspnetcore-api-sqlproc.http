@@ -1,0 +1,6 @@
+@aspnetcore_api_sqlproc_HostAddress = http://localhost:5199
+
+GET {{aspnetcore_api_sqlproc_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
