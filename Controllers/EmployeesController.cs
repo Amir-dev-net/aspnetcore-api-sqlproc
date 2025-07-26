@@ -28,6 +28,13 @@ namespace aspnetcore_api_sqlproc.Controllers
             var result = await _employeeService.GetEmployeeDepartmentDataAsync();
             return Ok(result);
         }
+
+        [HttpGet("multi-result-Json")]
+        public async Task<IActionResult> GetMultiResultJson()
+        {
+            var result = await _employeeService.GetEmployeeJsonAsync();
+            return Ok(result);
+        }
     }
 
 }

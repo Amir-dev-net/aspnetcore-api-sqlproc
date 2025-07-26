@@ -2,6 +2,7 @@
 using aspnetcore_api_sqlproc.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Text.Json;
 
 namespace aspnetcore_api_sqlproc.Services
 {
@@ -68,6 +69,27 @@ namespace aspnetcore_api_sqlproc.Services
 
             return response;
         }
+
+        public async Task<List<Employee>> GetEmployeeJsonAsync()
+        {
+            using var connection = _context.Database.GetDbConnection();
+            await connection.OpenAsync();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "GetEmployeeWithDepartment";
+            command.CommandType = CommandType.StoredProcedure;
+
+            using var reader = await command.ExecuteReaderAsync();
+            string json = string.Empty;
+
+            if (await reader.ReadAsync())
+            {
+                json = reader.GetString(0);
+            }
+
+            return JsonSerializer.Deserialize<List<Employee>>(json);
+        }
+
 
 
     }
